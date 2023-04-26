@@ -2,6 +2,7 @@ from tkinter import *
 BACKGROUND_COLOR = "#B1DDC6"
 
 window = Tk()
+window.title("Flash It")
 window.config(width=800, height=600, bg=BACKGROUND_COLOR, padx=50, pady=50)
 
 flash_card_fr = PhotoImage(file="images/card_front.png")
