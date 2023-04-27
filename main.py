@@ -23,6 +23,9 @@ def data_modifier():
 def word_generator():
     global current_card, timer
 
+    known_button["state"] = DISABLED
+    unknown_button["state"] = DISABLED
+
     window.after_cancel(timer)
 
     current_card = random.choice(data)
@@ -31,10 +34,14 @@ def word_generator():
     screen.itemconfig(lang, text="French", fill="black")
     screen.itemconfig(word, text=fr_word, fill="black")
 
-    timer = timer = window.after(3000, change_card)
+    timer = window.after(3000, change_card)
 
 
 def change_card():
+
+    known_button["state"] = ACTIVE
+    unknown_button["state"] = ACTIVE
+
     en_word = current_card["English"]
 
     screen.itemconfig(card, image=flash_card_en)
@@ -45,6 +52,7 @@ def change_card():
 window = Tk()
 window.title("Flash It")
 window.config(width=800, height=600, bg=BACKGROUND_COLOR, padx=50, pady=50)
+window.resizable(False, False)
 
 timer = window.after(3000, change_card)
 
@@ -68,9 +76,11 @@ screen.grid(row=0, column=0, columnspan=2)
 # Buttons
 known_button = Button(image=right_icon, border=0, highlightthickness=0, command=data_modifier)
 known_button.grid(row=1, column=0)
+known_button["state"] = DISABLED
 
 unknown_button = Button(image=wrong_icon, border=0, highlightthickness=0, command=word_generator)
 unknown_button.grid(row=1, column=1)
+unknown_button["state"] = DISABLED
 
 word_generator()
 window.mainloop()
